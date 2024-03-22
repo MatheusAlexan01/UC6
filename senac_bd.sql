@@ -37,7 +37,7 @@ nome nvarchar(40),
 modalidade nvarchar(15),
 data_inicio date,
 data_final date,
-area nvarchar(20),
+area nvarchar(30),
 primary key(id_curso)
 );
 
@@ -55,7 +55,6 @@ id_coordenador int primary key,
 id_senac nvarchar(15),
 id_matricula int,
 foreign key(id_matricula) references  funcionario (id_matricula),
-foreign key (id_senac) references  senac_unidade (unidade)
 );
 
 create table senac_unidade (
@@ -105,3 +104,54 @@ valor decimal(6,2),
 foreign key(matricula_A) references  aluno (id_matricula),
 );
 
+create table recepcionista(
+id_recepcionista int,
+foreign key(id_recepcionista) references  funcionario (id_matricula)
+);
+
+
+ALTER TABLE curso ADD vagas_disponiveis int;
+
+select * from curso;
+
+ALTER TABLE funcionario ADD data_admissao date;
+
+UPDATE curso SET nome = 'Tecnico em Desenvolvimento de Sistemas' WHERE id_curso = 4;
+
+
+ALTER TABLE professor DROP COLUMN tempo_servico;
+
+INSERT INTO funcionario (nome,cpf,cargo,telefone,email,id_endereco,salario,data_admissao) 
+VALUES
+('Amanda Cibele', '33467538401','Coordenador','843704666','estralaSophia@gmail',3,10100.10,'2010-10-18'); 
+
+ALTER TABLE endereco ALTER COLUMN complemento VARCHAR(30) NULL;
+
+
+
+
+
+INSERT INTO curso (nome,modalidade,data_inicio,data_final,area,duracao,alunos_matriculados,vagas_disponiveis,valor) 
+VALUES
+('Tecnico em Desenvolvimento de Sistamas', 'Presencial','2022-2-02','2023-6-02','Gestão','1 anos e 4 meses',3,7,8980.00);
+
+
+
+INSERT INTO aluno (nome,modalidade,data_inicio,data_final,area,duracao,alunos_matriculados,vagas_disponiveis,valor) 
+VALUES
+('Tecnico em Desenvolvimento de Sistamas', 'Presencial','2022-2-02','2023-6-02','Gestão','1 anos e 4 meses',3,7,8980.00);
+
+
+
+
+
+
+
+--Questão 3
+select nome,salario from  funcionario where cargo= 'Professor' order by salario desc ;
+
+---Questão 7
+select nome,alunos_matriculados from curso where alunos_matriculados='0';
+
+--Questão 12 
+select nome,alunos_matriculados from curso where nome ='Tecnico em Desenvolvimento de sistemas';
