@@ -116,7 +116,7 @@ select * from curso;
 
 ALTER TABLE funcionario ADD data_admissao date;
 
-UPDATE curso SET nome = 'Tecnico em Desenvolvimento de Sistemas' WHERE id_curso = 4;
+UPDATE curso SET area = 'TI' WHERE id_curso = 4;
 
 
 ALTER TABLE professor DROP COLUMN tempo_servico;
@@ -128,30 +128,88 @@ VALUES
 ALTER TABLE endereco ALTER COLUMN complemento VARCHAR(30) NULL;
 
 
+ALTER TABLE senac_unidade DROP COLUMN coordenador_unidade;
+ALTER TABLE senac_unidade DROP CONSTRAINT FK__senac_unid__cnpj__5070F446;
 
 
-
-INSERT INTO curso (nome,modalidade,data_inicio,data_final,area,duracao,alunos_matriculados,vagas_disponiveis,valor) 
+INSERT INTO endereco(nome,numero,complemento,bairro,cidade) 
 VALUES
-('Tecnico em Desenvolvimento de Sistamas', 'Presencial','2022-2-02','2023-6-02','Gestão','1 anos e 4 meses',3,7,8980.00);
+('Avenida Boa Sorte',101,'A','Gramoré','Natal');
 
 
 
-INSERT INTO aluno (nome,modalidade,data_inicio,data_final,area,duracao,alunos_matriculados,vagas_disponiveis,valor) 
+select nome,genero from aluno where genero = 'Feminino';
+
+
+
+
+
+INSERT INTO aluno (nome,idade,cpf,email,id_endereco,genero) 
 VALUES
-('Tecnico em Desenvolvimento de Sistamas', 'Presencial','2022-2-02','2023-6-02','Gestão','1 anos e 4 meses',3,7,8980.00);
+('Amorin',22,'99708955457','Amor1213@gmail.com',2,'Masculino');
 
 
 
 
 
 
+ALTER TABLE curso ADD unidade nVARCHAR(15) foreign key (unidade) references senac_unidade (unidade) ;
+
+ALTER TABLE Funcionario ALTER COLUMN Nome VARCHAR(100);
+
+
+---Questão 1 
+select * from funcionario;
+
+---Questão 2
+select nome,alunos_matriculados from curso;
 
 --Questão 3
 select nome,salario from  funcionario where cargo= 'Professor' order by salario desc ;
 
+---Questão 4
+select curso.area ,count(curso.area) as QUANTIDAD_CURSO from curso group by curso.area;
+
+
+---	Questão 5
+
+select datediff (month,''
+
+
+
 ---Questão 7
 select nome,alunos_matriculados from curso where alunos_matriculados='0';
 
---Questão 12 
+
+---Questão 8
+SELECT   DATEDIFF(year, data_admissao,  GETDATE()) AS DiferencaEmAnos,nome  from funcionario;
+
+
+---Questão 9
+
+
+---Questão 10
+select nome from aluno where nome like  '%a%';
+
+---Questão 12 
 select nome,alunos_matriculados from curso where nome ='Tecnico em Desenvolvimento de sistemas';
+
+---Questão 14
+SELECT nome,unidade from curso where nome ='Tecnico em Desenvolvimento de Sistemas';
+
+--- Questão 17
+select nome,genero from aluno where genero = 'Feminino';
+
+
+
+
+
+
+INSERT INTO curso(nome,modalidade,data_inicio,data_final,area,duracao,alunos_matriculados,vagas_disponiveis,valor,unidade) 
+VALUES
+('Tecnico em Desenvolvimento de Sistemas','Presencial','2022-02-02','2023-06-02','TI','1 ano e 4 meses',4,4,8980.00,'ZONA NORTE');
+
+
+SELECT nome,unidade from curso where nome ='Tecnico em Desenvolvimento de Sistemas';
+select * from curso;
+
