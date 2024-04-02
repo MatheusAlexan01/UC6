@@ -4,12 +4,12 @@ join SOCIOLOGIA on
 SOCIOLOGIA.numero_registro =  livro.numero_registro;
 
 ---Questão 2
-select nome from FUNCIONARIO
+select funcionario.nome from FUNCIONARIO
 join BIBLIOTECARIO on
 BIBLIOTECARIO.matricula = FUNCIONARIO.matricula;
 
 
-select * from LIVRO;
+select * from ATENDENTE;
 
 
 ---Questão 3
@@ -38,8 +38,8 @@ insert into LIVRO_BIBLIOTECA(cnpj,numero_registro) values
 select cnpj, count(*) as QUANTIDADE_DE_LIVROS  from livro_biblioteca group by LIVRO_BIBLIOTECA.cnpj;
 
 ---Questão 5 
-select data,tipo from EVENTO where tipo = 'Workshop' and data > '2020-31-12';
 
+select data,tipo from EVENTO where tipo = 'Workshop' and YEAR(data) > '2020';
 
 ---Questão 6
 create table usuario(
@@ -84,11 +84,64 @@ select cnpj,titulo from PERIODICO
 join PERIODICO_BIBLIOTECA on PERIODICO.numero_registro = PERIODICO_BIBLIOTECA.numero_registro
 where cnpj = '12345678000123';
 
+
+---Questão 9
+---Forma 1
+select * from FUNCIONARIO
+where matricula not like 't%';
+---Forma 2 ERRADA
+select * from  FUNCIONARIO
+where matricula  not in (select matricula from TECNICO_TI);
+
+ select * from  usuario
 ---Questão 10 
 
-select titulo,autor from livro 
+select titulo,autor,id_usuario from livro 
 join EMPRESTIMO on livro.numero_registro = EMPRESTIMO.id_livro
-where numero_registro = '1'
+where id_usuario = 100
+
+
+---Questão 11
+---FORMA 1
+select custo,tipo from EVENTO where custo > '100.00' and tipo = 'palestra';
+---FORMA 2
+select * from evento 
+join palestra on evento.id_evento = palestra.id_evento
+where custo > 100.00;
+
+---Questão 12 
+select titulo,ano_publicacao from livro
+join CIENCIA on CIENCIA.numero_registro = LIVRO.numero_registro
+where ano_publicacao > '2010';
+
+---Questão 13
+select FUNCIONARIO.nome from FUNCIONARIO
+join ATENDENTE on  FUNCIONARIO.matricula = ATENDENTE.matricula
+where FUNCIONARIO.nome like '% Maria %';
+
+---Questão 14
+select titulo from LIVRO
+join EMPRESTIMO  on LIVRO.numero_registro = EMPRESTIMO.id_livro  where
+(select count(*) from  EMPRESTIMO where livro.numero_registro = EMPRESTIMO.id_livro) > 5;
+
+---Questão 15
+select  EMPRESTIMO.id_usuario from EMPRESTIMO
+join LIVRO on LIVRO.numero_registro = EMPRESTIMO.id_usuario
+join usuario on EMPRESTIMO.id_usuario = usuario.id_usuario
+join TECNOLOGIA on LIVRO.numero_registro = TECNOLOGIA.numero_registro;
+
+---Questão  16
+select * from evento 
+join palestra on evento.id_evento = palestra.id_evento
+where year (data) > '2022';
+
+---Questão 17
+select titulo  from PERIODICO
+where titulo like '%saúde%';
+
+---Questão 18
+
+
 
 --- Questão 20
 select titulo,autor  from livro
